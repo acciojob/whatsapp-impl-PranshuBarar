@@ -78,7 +78,7 @@ public class WhatsappRepository {
 
     public int sendMessage(Message message, User sender, Group group) throws Exception {
         if(!groupDB.contains(group)){
-            throw new Exception("Group doesn't exist");
+            throw new Exception("Group does not exist");
         }
         boolean flag = false;
         for(User user : groupUserMap.get(group)){

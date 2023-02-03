@@ -93,8 +93,16 @@ public class WhatsappRepository {
 
         senderMap.put(message,sender);
 
-        List<Message> messageList = groupMessageMap.get(group);
-        messageList.add(message);
+        List<Message>messageList;
+        if(groupMessageMap.containsKey(group)){
+            messageList = groupMessageMap.get(group);
+            messageList.add(message);
+        }
+        else {
+            messageList = new ArrayList<>();
+            messageList.add(message);
+            groupMessageMap.put(group,messageList);
+        }
 
         return messageList.size() + 1;
 

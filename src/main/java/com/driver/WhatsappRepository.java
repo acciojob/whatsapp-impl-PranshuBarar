@@ -104,7 +104,7 @@ public class WhatsappRepository {
             groupMessageMap.put(group,messageList);
         }
 
-        return messageList.size() + 1;
+        return messageList.size();
 
     }
 

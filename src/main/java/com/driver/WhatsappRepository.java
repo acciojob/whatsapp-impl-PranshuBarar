@@ -16,9 +16,7 @@ public class WhatsappRepository {
     private HashSet<String> userMobile;
     private int customGroupCount;
     private int messageId;
-    private HashSet<User> userDB = new HashSet<>();
-    private HashSet<Message> messageDB = new HashSet<>();
-    private HashSet<Group> groupDB = new HashSet<>();
+
 
 
 
@@ -39,7 +37,6 @@ public class WhatsappRepository {
         }
         userMobile.add(mobile);
         User user = new User(name, mobile);
-        userDB.add(user);
         return "SUCCESS";
     }
 
@@ -64,7 +61,6 @@ public class WhatsappRepository {
         groupUserMap = new HashMap<>();
         groupUserMap.put(group,users);
 
-        groupDB.add(group);
 
         return group;
     }
@@ -72,12 +68,11 @@ public class WhatsappRepository {
     public int createMessage(String content){
         messageId++;
         Message message = new Message(messageId, content, new Date());
-        messageDB.add(message);
         return messageId;
     }
 
     public int sendMessage(Message message, User sender, Group group) throws Exception {
-        if(!groupDB.contains(group)){
+        if(!groupUserMap.containsKey(group)){
             throw new Exception("Group does not exist");
         }
         boolean flag = false;
@@ -103,13 +98,11 @@ public class WhatsappRepository {
             messageList.add(message);
             groupMessageMap.put(group,messageList);
         }
-
         return messageList.size();
-
     }
 
     public String changeAdmin(User approver, User user, Group group) throws Exception{
-        if(!groupDB.contains(group)){
+        if(!groupUserMap.containsKey(group)){
             throw new Exception("Group does not exist");
         }
         if(!adminMap.get(group).equals(approver)){

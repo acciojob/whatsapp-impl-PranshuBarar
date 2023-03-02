@@ -154,7 +154,15 @@ public class WhatsappRepository {
             throw new Exception("You are not allowed to send message");
         }
 
-        groupMessageMap.get(group).add(message);
+        if(groupMessageMap.containsKey(group)){
+            groupMessageMap.get(group).add(message);
+        }
+        else {
+            List<Message> messageList = new ArrayList<>();
+            messageList.add(message);
+            groupMessageMap.put(group,messageList);
+        }
+
 
         int finNoOfMessages = groupMessageMap.get(group).size();
 
